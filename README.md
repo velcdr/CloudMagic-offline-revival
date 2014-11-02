@@ -14,3 +14,23 @@ Initially I have:
 - modified code to work with the new Google UI.
 
 There is some small bug with Firefox addon. I had to add temporary workaround - messagebox "Welcome to CloudMagic" in the "Window Search" mode.
+
+INSTALLATION
+
+The easiest method:
+1. Install extension from the “oldbase” folder
+2. Close browser
+3. Replace contents of the CloudMagic extension folder
+
+How to locate CloudMagic extension folder
+
+a) Chrome
+- Navigate to chrome://version/ and look for Profile Path.
+- The CloudMagic extension is located in “Profile Path + “\Extensions\” + ExtensionID.
+(ExtensionID you can find on the Extensions list).
+
+b) Firefox %APPDATA%\Mozilla\Firefox\Profiles\xxxxxxxx.default\extensions\cloudmagic@webyog
+(where xxxxxxxx is unique profile id)
+
+
+velcdr[at]xmail.net
