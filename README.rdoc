@@ -1,0 +1,40 @@
+= CloudMagic Offline (revival)
+* http://github.com/velcdr/CloudMagic-offline-revival
+
+== DESCRIPTION:
+CloudMagic Offline is a free application that allows you to search your Gmail in-box as fast as using your desktop search. CloudMagic Offline works by creating a search index of your online data on your local hard disk. While your browser is functioning, the application is constantly updating the search index, in the background.
+
+Unlike Gmail Cloudmagic Offline supports partial search.
+
+http://www.wikihow.com/Use-the-CloudMagic-Gmail-Search-Extension
+
+CloudMagic Offline was previosly published on:
+
+http://addons.mozilla.org/pl/firefox/addon/cloudmagic-offline/
+http://chrome.google.com/webstore/detail/cloudmagic-offline-discon/oibjdhoodnlmcabfammkpopceokadllh
+
+In the 2012 CloudMagic Offline has been discontinued and all users have been asked to switch to the new CloudMagic.
+This repo is an effort to bring CloudMagic - Offline to life.
+
+== REQUIREMENTS:
+
+Gmail account
+Firefox or Google Chrome browser
+
+== INSTALL:
+1. Install extension from the “oldbase” folder
+2. Close browser
+3. Replace contents of the CloudMagic extension folder
+
+How to locate CloudMagic extension folder
+
+a) Chrome
+- Navigate to chrome://version and look for Profile Path.
+- Bring up the Extensions management page by going to this URL chrome://extensions and look 
+for Identification of the "CloudMagic Offline (discontinued)" extension.
+- The CloudMagic extension is located in “Profile Path + “\Extensions\” + Identification.
+
+
+b) Firefox 
+%APPDATA%\Mozilla\Firefox\Profiles\xxxxxxxx.default\extensions\cloudmagic@webyog
+(where xxxxxxxx is unique profile id)
