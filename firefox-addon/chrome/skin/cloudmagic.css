@@ -1,0 +1,37 @@
+#cloudmagic-toolbar-button {
+  list-style-image: url("chrome://cloudmagic/content/image/cm-logo-24.png");
+  -moz-image-region: rect(0px 24px 24px 0px);
+}
+
+#cloudmagic-button:hover {
+}
+
+#cloudmagic-toolbar-button[disabled="true"] {
+   -moz-image-region: rect(0px 48px 24px 24px);
+}
+
+toolbar[iconsize="small"] #cloudmagic-toolbar-button 
+{
+    list-style-image: url("chrome://cloudmagic/content/image/cm-logo-16.png");
+    -moz-image-region: rect(0px 16px 16px 0px);
+}
+
+
+.sidbar_right {
+    direction: rtl;
+}
+
+.sidbar_right > vbox {
+    direction: ltr;
+}
+
+.statusbarpanel-iconic
+{
+    cursor:pointer;
+}
+
+.cloudmagic-menuitem-iconic
+{
+    list-style-image: url("chrome://cloudmagic/content/image/cm-logo-16.png");
+    -moz-image-region: rect(0px 16px 16px 0px);
+}

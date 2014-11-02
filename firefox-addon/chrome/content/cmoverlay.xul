@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://cloudmagic/skin/cloudmagic.css" type="text/css"?>
+<overlay xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' xmlns:html="http://www.w3.org/1999/xhtml">
+  <script type='application/x-javascript' src='chrome://cloudmagic/content/cmcollection.js'></script>
+  <script type='application/x-javascript' src='chrome://cloudmagic/content/xmlhttprequester.js'></script>
+  <script type='application/x-javascript' src='chrome://cloudmagic/content/prefman.js'></script>
+  <script type='application/x-javascript' src='chrome://cloudmagic/content/script-compiler.js'></script>
+  <script type='application/x-javascript' src='chrome://cloudmagic/content/managetoolbar.js'></script>
+
+  <script type="application/x-javascript">
+  <![CDATA[
+
+    function GetCloudMagicTs() {
+// VERSION_START //
+	var ts = "1331205685";
+// VERSION_END //
+      return ts;
+    }
+    
+    function OpenCloudMagicSearch(query) {
+      var ts = GetCloudMagicTs();
+      var search_url = "chrome://cloudmagic/content/res/cloudmagic.html?ts=" + 
+                       ts + "#search" + "?category=all&account=all&query=" + 
+                       encodeURIComponent(query);
+      var uri = Components.classes["@mozilla.org/network/io-service;1"]
+                          .getService(Components.interfaces.nsIIOService)
+                          .newURI(search_url, null, null);
+      var new_tab = Application.activeWindow.open(uri);
+      new_tab.focus();
+    }
+    
+    function InvokeCloudMagicSearchWithQuery() {
+      var selectedtext;
+      try {
+        selectedtext = Application.activeWindow.activeTab.document.getSelection();
+        if (selectedtext == null) {
+          selectedtext = "";
+        }
+      } catch (e) {
+        selectedtext = "";
+      }
+      
+      OpenCloudMagicSearch(selectedtext);
+    }
+    
+    function InvokeCloudMagicSearch() {
+      OpenCloudMagicSearch("");
+    }
+    
+    function CloudMagicContextPopupShowing() {
+      try {
+        var cmenu = document.getElementById("cloudmagic-display-menuitem");
+        var selectedtxt = Application.activeWindow.activeTab.document.getSelection();
+        if (selectedtxt.length > 0) {
+          cmenu.label = "Search CloudMagic for '" + selectedtxt + "'";
+        } else {
+          cmenu.label = "CloudMagic";
+        }
+      } catch (e) {
+      }
+    }
+    
+    function CloudMagicInitOverlay() {
+      var menu = document.getElementById("contentAreaContextMenu");
+      menu.addEventListener("popupshowing", CloudMagicContextPopupShowing, false);
+    };
+    
+    window.addEventListener("load", CloudMagicInitOverlay, false);
+    
+    // Attachevent to handle open in a tab
+    window.document.addEventListener("CloudMagicOpenInTab",
+      function (e) {
+        try {
+          var url = e.target.getAttribute("CloudMagicOpenInTab_Param1");
+          var uri = Components.classes["@mozilla.org/network/io-service;1"]
+                            .getService(Components.interfaces.nsIIOService)
+                            .newURI(url, null, null);
+          var url_tab = Application.activeWindow.open(uri);
+          url_tab.focus();
+        } catch(e) {
+        }
+        
+      }, false, true);
+      
+      // Attachevent to handle open in a tab
+    window.document.addEventListener("CloudMagicOpenSearchCategory",
+      function (e) {
+        try {
+          var category = e.target.getAttribute("CloudMagicOpenSearchCategory_Param");
+          var ts = GetCloudMagicTs();
+          var url = "chrome://cloudmagic/content/res/cloudmagic.html?ts=" + 
+                       ts + "#search?category=" + category + "&query=";
+                            
+          var uri = Components.classes["@mozilla.org/network/io-service;1"]
+                            .getService(Components.interfaces.nsIIOService)
+                            .newURI(url, null, null);
+          var url_tab = Application.activeWindow.activeTab.load(uri);
+        } catch(e) {
+        }
+        
+      }, false, true);
+                
+  ]]>
+  </script>
+
+  <!-- Firefox toolbar -->
+  <toolbarpalette id="BrowserToolbarPalette">
+    <toolbarbutton id="cloudmagic-toolbar-button" 
+                   label="CloudMagic" 
+                   class="toolbarbutton-1 chromeclass-toolbar-additional" 
+                   tooltiptext="CloudMagic" 
+                   oncommand="return InvokeCloudMagicSearch();" />
+  </toolbarpalette>
+
+  <!-- Firefox context menu -->
+  <popup  id="contentAreaContextMenu">
+    <menuseparator/>
+    <menuitem id="cloudmagic-display-menuitem" 
+              label="CloudMagic" 
+              class="menuitem-iconic cloudmagic-menuitem-iconic"
+              oncommand="return InvokeCloudMagicSearchWithQuery();"/>
+  </popup >
+
+  <!-- status bar -->
+  <statusbar id="status-bar">
+    <statusbarpanel class="statusbarpanel-iconic" 
+                    onclick="InvokeCloudMagicSearch();" 
+                    tooltiptext="CloudMagic" 
+                    src="chrome://cloudmagic/content/image/cm-logo-16-grey.png" />
+  </statusbar>
+   
+  <!-- tools menu -->
+  <menupopup id="menu_ToolsPopup">
+    <menuitem id="cloudmagic-display-menuitem2" 
+              label="CloudMagic" 
+              class="menuitem-iconic cloudmagic-menuitem-iconic"
+              insertafter="devToolsSeparator" 
+              accesskey="C"
+              oncommand="return InvokeCloudMagicSearch();" />
+  </menupopup>
+
+  <vbox height="0">
+    <iframe id="wrappedPlugin" src="chrome://cloudmagic/content/bg.plugin.frame.html" style="width:0px;height:0px"></iframe>
+  </vbox>
+
+</overlay>
+
+

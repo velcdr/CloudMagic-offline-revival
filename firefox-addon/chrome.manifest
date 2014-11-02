@@ -1,0 +1,6 @@
+content	cloudmagic chrome/content/
+content	cloudmagic	chrome/content/ contentaccessible=yes
+overlay	chrome://browser/content/browser.xul	chrome://cloudmagic/content/cmoverlay.xul
+
+skin	cloudmagic	classic/1.0	chrome/skin/
+style	chrome://global/content/customizeToolbar.xul	chrome://cloudmagic/skin/cloudmagic.css 

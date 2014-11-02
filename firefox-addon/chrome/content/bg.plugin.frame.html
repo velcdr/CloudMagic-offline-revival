@@ -1,0 +1,49 @@
+<html>
+<body>
+    <embed type='application/x-cloudmagic-interface' id='cmInterfacePlugin' width='1' height='1'/>
+    <embed type='application/x-cloudmagic-sync-service' id='cmSyncServicePlugin' width='1' height='1'/>
+    <script type="text/javascript">
+            try {
+                var p = document.getElementById("cmInterfacePlugin");
+                if (typeof p.IsNewInstallation == "undefined") {
+                    // remmove nodes
+                    p.parentNode.removeChild(p);
+                    p = document.getElementById("cmSyncServicePlugin");
+                    p.parentNode.removeChild(p);
+                    // refresh plugins
+                    navigator.plugins.refresh();
+                    // add new plugin nodes - interface
+                    p = document.createElement("embed");
+                    p.id = 'cmInterfacePlugin';
+                    p.type = 'application/x-cloudmagic-interface';
+                    p.width = 1;
+                    p.height = 1;
+                    document.body.appendChild(p);
+                    // add new plugin nodes - sync
+                    p = document.createElement("embed");
+                    p.id = 'cmSyncServicePlugin';
+                    p.type = 'application/x-cloudmagic-sync-service';
+                    p.width = 1;
+                    p.height = 1;
+                    document.body.appendChild(p);
+                    
+                    p = document.getElementById("cmInterfacePlugin");
+                }
+                self.is_new_install_ = p.IsNewInstallation(false); // is it chrome or not
+                p.UpdateVersion(false);
+                p.parentNode.removeChild(p);
+                if (self.is_new_install_ == 1) {
+                    window.setTimeout(function() {
+                                var welcome_url = "http://www.cloudmagic.com/welcome.php?s=n";
+                                var uri = Components.classes["@mozilla.org/network/io-service;1"]
+                                                                .getService(Components.interfaces.nsIIOService)
+                                                                .newURI(welcome_url, null, null);
+                                var welcome_tab = Application.activeWindow.open(uri);
+                                welcome_tab.focus();
+                    }, 1000);
+                }
+            } catch (e) {
+            }
+    </script>
+</body>
+</html>
