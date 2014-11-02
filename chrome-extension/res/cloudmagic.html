@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>CloudMagic Search</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/direct.css?v=2" />
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=2" />
+    
+    <script type="text/javascript" src="js/cloudmagic_min.js?v=2"></script>
+    
+    <script type="text/javascript">        	
+		function GetURLParameters(_name){  
+			_name = _name.replace(/[\[]/,"/\[").replace(/[\]]/,"\\\]");  
+			var regexS = "[\\?&]"+_name+"=([^&#]*)";  
+			var regex = new RegExp( regexS );  
+			var results = regex.exec(window.location.href);  
+		    
+			if(results == null)    
+				return "";  
+			else    
+				return results[1];
+		}
+    
+        if ("undefined" == typeof(CloudMagic)) {
+          var CloudMagic = {};
+        };
+        
+// VERSION_START //
+ CloudMagic.CMSCRIPTVER = "3_19_Beta";
+ CloudMagic.cmDebug = "0";
+ CloudMagic.CMSCRIPTTS = "1331205797";                         
+ CloudMagic.CMSHOWNEWFEATUREMSG = "1";
+ CloudMagic.CMHST = "www.cloudmagic.com"
+// VERSION_END //
+		
+		var ts = GetURLParameters("ts");
+		var q = GetURLParameters("query");
+		var c = GetURLParameters("category");
+		
+		
+		// make sure ts is part of the url param, if not reload with proper ts.
+		// this is done to avoid refreshing when we are changing the url while searching
+		if (ts == null || typeof ts == undefined || ts.length == 0) {
+		    window.onload = function () {
+		        window.location = "cloudmagic.html?" + 
+										        "ts=" + CloudMagic.CMSCRIPTTS + 
+										        "#search?query=" + q + "&category=" + c;
+	        } 
+        }
+		    
+    </script>
+
+</head>
+<body>
+    <!-- CM top info bar -->
+    <div class="cm-top-bar cm-font-small">
+        <table style="width:100%" cellpadding=0 cellspacing=0>
+            <tr>
+                <td style="text-align:left">
+                    <ol class="cm-search-menu-ol">
+                        <li class="cm-search-menu-li">
+                            <span class="cm-link cm-search-menu cm-search-menu-all">Everything</span>
+                        </li>
+                        <li class="cm-search-menu-li">
+                            <span class="cm-link cm-search-menu cm-search-menu-mail">Mails</span>
+                        </li>
+                        <li class="cm-search-menu-li">
+                            <span class="cm-link cm-search-menu cm-search-menu-event">Events</span>
+                        </li>
+                        <li class="cm-search-menu-li">
+                            <span class="cm-link cm-search-menu cm-search-menu-doc">Documents</span>
+                        </li>
+                        <li class="cm-search-menu-li">
+                            <span class="cm-link cm-search-menu cm-search-menu-contact">Contacts</span>
+                        </li>
+                        <li class="cm-search-menu-li">
+                            <span class="cm-link cm-search-menu cm-search-menu-tweet">Tweets</span>
+                        </li>
+                    </ol>
+                </td>
+                <td style="text-align:right">
+                    <ol class="cm-search-menu-ol">
+                        <li class="cm-search-menu-li">
+                            <span id="cmSeeNewFeaturesWrapper" style="display:none"><a id="cmSeeNewFeatures" target="_blank" class="cm-new-features-msg" href="http://blog.cloudmagic.com/category/releases/">See what's new!</a></span>
+                        </li>
+                        <li class="cm-search-menu-li-2">
+                            <span id="cmActiveAccountWrapper">
+                                Search in: 
+                                <div id="cmServiceTypeIcon" style="display:inline-block"></div>
+                                <span id="cmActiveAccount" class="cm-link">all</span>
+                                <span id="cmSelectAccount">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </li>
+                        <li class="cm-search-menu-li">
+                            <a id="cmSettings" class="cm-link" style="text-decoration:none;" href="#">Settings</a>
+                        </li>
+                        <li class="cm-search-menu-li">
+                            <a id="cmHelp" class="cm-link" style="text-decoration:none;" href="#">Help</a>
+                        </li>
+                    </ol>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="cm-select-account cm-font-small">
+        <!-- container for account listing -->
+    </div>
+    <div class="cm-balloon cm-font-small"></div>
+    <br />
+    <div class="cm-search-bar">
+        <table style="table-layout:fixed" cellspacing="0" cellpadding="0">
+            <tr>
+                <td style="width:185px;padding-left:37px">
+                    <img src="image/logo.png?v=1" /> <br />
+                    <div id="cmVersion" class="cm-version" align="right"></div>
+                </td>
+                <td style="padding-top:15px">
+                    <div  class="cm-search-box-wrapper2">
+                        <div  class="cm-search-box-wrapper">
+                            <table cellspacing="0" cellpadding="0" border="0" style="table-layout:fixed">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div style="position: relative;">
+                                                <input id="cmSearchBox" type="text" title="Search" class="cm-search-box cm-search-empty" autocomplete="off" />
+                                            </div>
+                                        </td>
+                                        <td style="width:20px">
+                                            <div id="cmClearButton" class="cm-clear-button">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="cm-search-button-wrapper">
+                                              <button class="cm-search-button" value="" > 
+                                                <span class="cm-search-button-icon"></span>
+                                              </button>
+                                            </div>
+                                         </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="text-align:right">
+                        <a target="_blank" class="cm-font-smaller cm-link" href="http://www.cloudmagic.com/advanced_search_operators.php">Advanced search</a>
+                    </div>
+                </td>
+                <td style="padding-left:10px">
+                    <div class="cm-sharelinks cm-font-small mb-grey"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br/>
+    <div class="cm-search-contact">
+        <table style="table-layout:fixed" cellspacing="0" cellpadding="0" >
+            <tr>
+                <td style="width:221px" valign=top>
+                    <div  class="cm-search-option-wrapper">
+                        <div  class="cm-search-option-item cm-font-normal cm-search-option cm-search-option-all">Everything</div>
+                        <div  class="cm-search-option-item cm-font-normal cm-search-option cm-search-option-mail">Mails</div>
+                        <div  class="cm-search-option-item cm-font-normal cm-search-option cm-search-option-event">Events</div>
+                        <div  class="cm-search-option-item cm-font-normal cm-search-option cm-search-option-doc">Documents</div>
+                        <div  class="cm-search-option-item cm-font-normal cm-search-option cm-search-option-contact">Contacts</div>
+                        <div  class="cm-search-option-item cm-font-normal cm-search-option cm-search-option-tweet">Tweets</div>
+                        <br />
+                        <br />
+                        <br />
+                        <div  class="cm-page-info">
+                            <br />
+                            <div class="cm-bookmark cm-font-small">
+                                Press CTRL+D to bookmark this page
+                            </div>
+                            <br />
+                            <br />
+                            <div class="cm-status-msg cm-font-small"></div>
+                            <br />
+                            <br />
+                            <div class="cm-font-small mb-grey">
+                                &copy; 2011 Webyog, Inc. 
+                                <br />
+                                <a href="http://www.cloudmagic.com" target=_blank>www.cloudmagic.com</a>
+                            </div>
+                            <br />
+                            <div class="cm-font-small mb-grey">
+                                Send your feedback to 
+                                <br />
+                                <a  class="cm-link" href="mailto:feedback@cloudmagic.com">feedback@cloudmagic.com</a>
+                            </div>
+                            <br/>                            
+                        </div>
+                    </div>
+                </td>
+                <td style="width:600px" valign=top>
+                    <div  class="cm-search-result-wrapper">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="cm-top-msg-banner cm-safari-update cm-font-small">
+        CloudMagic <span id="cmVersionInfo"></span> is available. <br />
+        Do you want to download now? <br />
+        <span><a class="cm-link" href="http://www.cloudmagic.com/install.php">Download</a>&nbsp;&nbsp;<span class="cm-link" id="cmHideUpdateMsg">Close</span></span>
+    </div>
+    
+    <div class="cm-top-msg-banner cm-reload-msg cm-font-small">
+        CloudMagic successfully updated.<br/> Click <span id="cmReload" class='mb-link'>here</span> to reload.
+    </div>
+    
+ 
+    
+    <div class="cm-back-to-top cm-font-small">
+        Back to top
+    </div>
+
+<script>
+    function LoadUI()  {
+        if (typeof jQuery == "undefined") {
+            window.setTimeout(function() {LoadUI();}, 20);
+            return;
+        }
+        window.setTimeout(function() {
+    jQuery.noConflict();
+    cmjQuery_ = window.jQuery;
+
+    var cmdirectapp = null;
+    cmjQuery_(document).ready(function() {
+        cmdirectapp = new CloudMagic.Interface();
+        cmdirectapp.Create();
+    });
+        }, 10);
+    }
+    
+    LoadUI();
+</script>
+
+</body>
+</html>

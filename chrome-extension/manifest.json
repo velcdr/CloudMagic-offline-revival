@@ -1,0 +1,40 @@
+{
+"update_url":"http://clients2.google.com/service/update2/crx",	"content_scripts": [ {
+		"js": [ "cmguiload.js" ],
+		"matches": [ "*://mail.google.com/mail*",
+				"*://mail.google.com/a/*",
+				"*://docs.google.com/*",
+				"*://docs0.google.com/*",
+				"*://spreadsheets.google.com/*",
+				"*://spreadsheets0.google.com/*",
+        "*://twitter.com/*",
+        "*://127.0.0.1/*",
+        "*://www.google.com/calendar/*"]
+				} ],
+	"converted_from_user_script": true,
+	"description": "Super fast search for your online data",
+	"icons": {
+		"128": "cm-logo-128.png",
+		"48": "cm-logo-48.png",
+		"16": "cm-logo-16.png"
+	},
+	"name": "CloudMagic - Offline (revival)",
+	"version": "3.19.1",
+	"background_page": "background.html",
+   "browser_action": {
+        "default_icon": "cm-logo-19.png",
+        "default_title": "CloudMagic Offline",
+        "popup": "res/popup.html?sb=1"
+   },
+  "omnibox": { "keyword" : "c" },
+  "minimum_chrome_version": "10",
+	"permissions": ["tabs", "contextMenus"], 
+"plugins": [
+{ "path": "plugins/libnpcloudmagicgui32.so", "public": true },
+{ "path": "plugins/libnpcloudmagicdl32.so", "public": true },
+{ "path": "plugins/npcloudmagicgui.plugin", "public": true },
+{ "path": "plugins/npcloudmagicdl.plugin", "public": true },
+{ "path": "plugins/npcloudmagicgui.dll", "public": true },
+{ "path": "plugins/npcloudmagicdl.dll", "public": true }
+]
+}
